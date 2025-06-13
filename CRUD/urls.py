@@ -9,6 +9,7 @@ from django.conf import settings
 
 urlpatterns = [
     path("", Home, name="home"),
+    path("home", Home, name="home"),
     path("contact", Contact, name="contact"),
     path("about", About_blogs, name="About"),
     path("register", Register, name="register"),
