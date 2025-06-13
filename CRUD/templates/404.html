@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 Not Found</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* For smooth mobile menu toggling */
+    #mobile-menu-button[aria-expanded="true"] svg > path:nth-child(1) {
+      transform: rotate(45deg);
+      transform-origin: center;
+      transition: transform 0.3s;
+    }
+    #mobile-menu-button[aria-expanded="true"] svg > path:nth-child(2) {
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    #mobile-menu-button[aria-expanded="true"] svg > path:nth-child(3) {
+      transform: rotate(-45deg);
+      transform-origin: center;
+      transition: transform 0.3s;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 text-blue-900 min-h-screen flex flex-col">
+
+  <!-- NAVIGATION -->
+  <nav class="bg-white border-b border-gray-200 py-2.5">
+    <div class="flex flex-wrap items-center justify-evenly max-w-screen-xl px-4 mx-auto">
+      <button id="mobile-menu-button" type="button" 
+        class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" 
+        aria-controls="mobile-menu" aria-expanded="false" aria-label="Open main menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+      <div class="hidden w-full lg:flex lg:w-auto" id="mobile-menu">
+        <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+          <li>
+            <a href="/blogs/home" class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0" aria-current="page">Home</a>
+          </li>
+          <li>
+            <a href="/blogs/read" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0">Read Blogs</a>
+          </li>
+          <li>
+            <a href="/blogs/create" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0">Create Blogs</a>
+          </li>
+          <li>
+            <a href="/blogs/your" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0">Your Blogs</a>
+          </li>
+          <li>
+            <a href="/blogs/contact" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0">Contact</a>
+          </li>
+          <li>
+            <a href="/blogs/about" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0">About</a>
+          </li>
+          <li>
+            <!-- Django template conditional for login/logout -->
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0">
+              <label class="pr-2">Logout</label> <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
+            {% else %}
+            <a href="{% url 'login' %}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0">
+              <label class="pr-2">Login</label> <i class="fa fa-sign-in" aria-hidden="true"></i>
+            </a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN 404 CONTENT -->
+  <main class="flex-grow flex flex-col items-center justify-center px-4 text-center">
+    <h1 class="text-9xl font-extrabold tracking-widest text-blue-400">404</h1>
+    <p class="text-2xl md:text-3xl font-semibold mt-6 mb-2">Oops! Page Not Found.</p>
+    <p class="mb-6 text-blue-700 max-w-xl">Sorry, the page you are looking for does not exist or has been moved.</p>
+    <a href="/blogs/home" 
+       class="px-6 py-3 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition">
+      Go Back Home
+    </a>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-300 py-10 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- About Section -->
+        <div>
+          <h3 class="text-white text-xl font-semibold mb-4">About Me</h3>
+          <p class="text-gray-400 text-sm">
+            Hi! I’m Aashish, a passionate blogger sharing tech tips, tutorials, and stories.
+            Stay connected and learn with me!
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-white text-xl font-semibold mb-4">Quick Links</h3>
+          <ul>
+            <li class="mb-2"><a href="/blogs/home" class="hover:text-white transition">Home</a></li>
+            <li class="mb-2"><a href="/blogs/read" class="hover:text-white transition">Blog</a></li>
+            <li class="mb-2"><a href="/blogs/about" class="hover:text-white transition">About</a></li>
+            <li class="mb-2"><a href="/blogs/contact" class="hover:text-white transition">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Social Media -->
+        <div>
+          <h3 class="text-white text-xl font-semibold mb-4">Follow Me</h3>
+          <div class="flex space-x-4">
+            <a href="https://www.facebook.com/aashish.adhikari.2025" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-white transition">
+              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5v-2.3c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.3.2 2.3.2v2.5H15c-1.2 0-1.5.7-1.5 1.4V12h2.6l-.4 3h-2.2v7A10 10 0 0 0 22 12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/aashish-adhikari-731377352/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-white transition">
+              <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zm-8 0H4v12h4zm-2-4a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+        &copy; 2025 Aashish Adhikari. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true' || false;
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>
