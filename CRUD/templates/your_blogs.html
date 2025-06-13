@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blogs</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+  <div class="flex flex-wrap items-center justify-evenly max-w-screen-xl px-4 mx-auto">
+    <button id="mobile-menu-button" type="button" 
+      class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" 
+      aria-controls="mobile-menu" aria-expanded="false">
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <div class="hidden w-full lg:flex lg:w-auto" id="mobile-menu">
+      <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+        <li>
+          <a href="/blogs/home" class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
+        </li>
+        <li>
+          <a href="/blogs/read" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Read Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/create" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Create Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/your" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Your Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/contact" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+        </li>
+        <li>
+            <a href="/blogs/about" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">About</a>
+          </li>
+        <li>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+            <label class=" pr-2">Logout</label> <i class="fa fa-sign-out" aria-hidden="true"></i>
+          </a>
+          {% else %}
+          <a href="{% url 'login' %}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+            <label class=" pr-2">Login</label>    <i class="fa fa-sign-in" aria-hidden="true"></i>
+          </a>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    <div class="grid grid-cols-1 justify-center sm:grid-cols-2 md:grid-cols-3 gap-10 p-6">
+        {% for blog in blogs %}
+        <!-- CARD -->
+        <div class="rounded overflow-hidden shadow-lg flex flex-col">
+            <a href="/blogs/single_page/{{ blog.id }}" class="block">
+                <div class="relative">
+                    {% if blog.image %}
+                        <img class="w-full" src="{{ blog.image.url }}" alt="Blog image" />
+                    {% else %}
+                        <img class="w-full" src="{% static 'path/to/default-image.jpg' %}" alt="Default image" />
+                    {% endif %}
+                    <div class="absolute inset-0 bg-gray-900 opacity-25 hover:opacity-0 transition duration-300">
+                        
+                    </div>
+                    <a href="#!" class="absolute top-3 right-3 bg-indigo-600 px-4 py-2 text-white rounded hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out text-xs">
+                {{ blog.tags }}
+                        </a>
+                </div>
+            </a>
+            
+
+            <div class="px-6 py-4 mb-auto h-48 overflow-hidden">
+                <a href="/blogs/single_page/{{ blog.id }}" class="font-medium text-lg hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2">
+                    {{ blog.subtitle }}
+                </a>
+                <p class="text-gray-500 text-sm">{{ blog.description|truncatewords:30 }}</p>
+            </div>
+
+            <div class="px-6 py-3 flex items-center justify-between bg-gray-100">
+                <span class="py-1 text-xs font-regular text-gray-900 flex items-center">
+                    <svg height="13" width="13" viewBox="0 0 512 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M277.333,256 c0,11.797-9.536,21.333-21.333,21.333h-85.333c-11.797,0-21.333-9.536-21.333-21.333s9.536-21.333,21.333-21.333h64v-128 c0-11.797,9.536-21.333,21.333-21.333s21.333,9.536,21.333,21.333V256z"/>
+                    </svg>
+                    <span class="ml-1">{{ blog.updated_at|date:"M d, Y" }}</span>
+                </span>
+
+                <span class="py-1 text-xs font-regular text-gray-900 flex items-center">
+                    <span class="ml-1">
+                      <form action="/blogs/delete_blog/{{blog.id}}" method="POST" class=" inline-block">  
+                        {% csrf_token %}
+                      <button type="submit" class="delete bg-indigo-600 px-4 py-2 text-white rounded hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out text-xs">delete</button>
+                      </form>
+                      <form action="/blogs/edit_blog/{{blog.id}}" method="GET" class="inline-block">
+                      <button type="submit" class="bg-indigo-600 px-4 py-2 text-white rounded hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out text-xs">Edit</button>
+                      </form>
+
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+<script>
+</script>
+</html>

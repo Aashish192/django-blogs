@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 min-h-screen">
+
+<!-- Navbar (unchanged) -->
+<nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+  <div class="flex flex-wrap items-center justify-evenly max-w-screen-xl px-4 mx-auto">
+    <button id="mobile-menu-button" type="button" 
+      class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" 
+      aria-controls="mobile-menu" aria-expanded="false">
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <div class="hidden w-full lg:flex lg:w-auto" id="mobile-menu">
+      <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+        <li>
+          <a href="/blogs/home" class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
+        </li>
+        <li>
+          <a href="/blogs/read" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Read Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/create" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Create Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/your" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Your Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/contact" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+        </li>
+        <li>
+            <a href="/blogs/about" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">About</a>
+          </li>
+        <li>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+            <label class=" pr-2">Logout</label> <i class="fa fa-sign-out" aria-hidden="true"></i>
+          </a>
+          {% else %}
+          <a href="{% url 'login' %}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+            <label class=" pr-2">Login</label>    <i class="fa fa-sign-in" aria-hidden="true"></i>
+          </a>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Form container -->
+<div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md mt-10">
+
+  <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Create a New Blog</h1>
+
+  <form action="{% url 'Create_blog' %}" method="POST" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+
+    <div>
+      <label for="title" class="block mb-2 font-semibold text-blue-800">Title</label>
+      <input type="text" name="title" id="title" required
+        class="w-full p-3 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <div>
+      <label for="subtitle" class="block mb-2 font-semibold text-blue-800">Subtitle</label>
+      <input type="text" name="subtitle" id="subtitle"
+        class="w-full p-3 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <div>
+      <label for="content" class="block mb-2 font-semibold text-blue-800">Content</label>
+      <textarea name="content" id="content" rows="6" required
+        class="w-full p-3 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+    </div>
+
+    <div>
+      <label for="tags" class="block mb-2 font-semibold text-blue-800">Tags (comma separated)</label>
+      <input type="text" name="tags" id="tags"
+        class="w-full p-3 border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <div>
+      <label for="image" class="block mb-2 font-semibold text-blue-800">Blog Image</label>
+      <input type="file" name="image" id="image" accept="image/*"
+        class="w-full text-blue-800 border border-blue-300 rounded p-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    </div>
+
+    <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded transition-colors duration-300">
+      Publish Blog
+    </button>
+  </form>
+
+</div>
+
+</body>
+</html>
+    

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="{% static 'src/output.css' %}" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-blue-200 min-h-screen flex flex-col font-sans">
+
+    <!-- ✅ Flash Messages -->
+    {% if messages %}
+        <div class="fixed top-4 left-1/2 transform -translate-x-1/2 w-full max-w-md z-50 space-y-2">
+            {% for message in messages %}
+                {% if message.tags == "success" %}
+                    <div class="message bg-green-100 text-green-800 px-4 py-2 rounded-lg shadow-md transition-opacity duration-500">
+                        {{ message }}
+                    </div>
+                {% elif message.tags == "error" %}
+                    <div class="message bg-red-100 text-red-800 px-4 py-2 rounded-lg shadow-md transition-opacity duration-500">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="message bg-blue-100 text-blue-800 px-4 py-2 rounded-lg shadow-md transition-opacity duration-500">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- ✅ Navigation Bar -->
+<nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+  <div class="flex flex-wrap items-center justify-evenly max-w-screen-xl px-4 mx-auto">
+    <button id="mobile-menu-button" type="button" 
+      class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" 
+      aria-controls="mobile-menu" aria-expanded="false">
+      <span class="sr-only">Open main menu</span>
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+
+    <div class="hidden w-full lg:flex lg:w-auto" id="mobile-menu">
+      <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+        <li>
+          <a href="/blogs/home" class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
+        </li>
+        <li>
+          <a href="/blogs/read" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Read Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/create" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Create Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/your" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Your Blogs</a>
+        </li>
+        <li>
+          <a href="/blogs/contact" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+        </li>
+        <li>
+            <a href="/blogs/about" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">About</a>
+          </li>
+        <li>
+          <a href="{% url 'register' %}" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <!-- ✅ Login Form -->
+    <div class="flex-grow flex items-center justify-center px-4">
+        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in mt-8 mb-8">
+            <div class="text-center mb-6">
+                <div class="text-4xl text-blue-600 mb-2">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-blue-700">Welcome Back</h2>
+                <p class="text-gray-500 mt-1">Login to your account</p>
+            </div>
+
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="text-sm text-gray-600">Email</label>
+                    <input type="email" name="email" autocomplete="email" class="mt-1 w-full px-4 py-2 border rounded-lg border-blue-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300" required>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600">Password</label>
+                    <input type="password" name="password" autocomplete="current-password" class="mt-1 w-full px-4 py-2 border rounded-lg border-blue-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-300" required>
+                </div>
+                <button type="submit" id="submit" class="w-full py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg shadow hover:shadow-lg transition">Login</button>
+            </form>
+
+            <p class="text-center text-sm text-gray-500 mt-6">
+                Don’t have an account?
+                <a href="{% url 'register' %}" class="text-blue-600 hover:underline">Register</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ✅ Scripts -->
+    <script>
+        // Flash messages fade out
+        window.onload = () => {
+            setTimeout(() => {
+                document.querySelectorAll(".message").forEach(el => {
+                    el.classList.add("opacity-0");
+                    setTimeout(() => el.remove(), 500);
+                });
+            }, 3000);
+        };
+
+        // Mobile navbar toggle
+        document.getElementById("mobile-menu-button").addEventListener("click", () => {
+            const menu = document.getElementById("mobile-menu");
+            menu.classList.toggle("hidden");
+        });
+    </script>
+</body>
+</html>
