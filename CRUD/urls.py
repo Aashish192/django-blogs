@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path("home", Home, name="home"),
+    path("", Home, name="home"),
     path("contact", Contact, name="contact"),
     path("about", About_blogs, name="About"),
     path("register", Register, name="register"),
