@@ -78,13 +78,14 @@ WSGI_APPLICATION = 'pyweb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',  
-        'USER': 'root',         
-        'PASSWORD': '',  
-        'HOST': 'localhost',   
-        'PORT': '3306',         
+        'NAME': 'railway',
+        'USER': 'root',
+        'PASSWORD': 'aiYeNMacuBbhyOjXpLtYGnGSXrJQnKLl',
+        'HOST': 'shortline.proxy.rlwy.net',
+        'PORT': '50713',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
